@@ -64,7 +64,14 @@ Xonomy.xml2js=function(xml, jsParent) {
 			js["children"].push(Xonomy.xml2js(child, js));
 		}
 		if(child.nodeType==3) { //text node
-			js["children"].push({type: "text", value: child.nodeValue, htmlID: "", parent: function(){return js}, });
+		    var s = child.data.replace(/\s*\r?\n\s*/,"");
+		    if(s.length!=0){
+				js["children"].push({	type: "text", 
+							value: child.nodeValue, 
+							htmlID: "", 
+							parent: function(){return js}, 
+						    });
+			}
 		}
 	}
 	js=Xonomy.enrichElement(js);
